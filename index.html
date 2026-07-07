@@ -281,7 +281,7 @@
       clear(svg);
       const { w, h } = size(svg);
       svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-      const p = { l: opts.left || 118, r: 24, t: 10, b: 28 };
+      const p = { l: opts.left || 118, r: opts.right || 76, t: 10, b: 28 };
       const xw = w - p.l - p.r;
       const barH = Math.max(13, Math.min(24, (h - p.t - p.b) / rows.length - 7));
       const maxV = Math.max(...rows.map(d => d[valueKey]), 1);
@@ -292,14 +292,13 @@
         svg.appendChild(el('text', { x: p.l - 8, y: y + barH - 3, fill: '#d1d5db', 'font-size': 11, 'text-anchor': 'end' }, label));
         svg.appendChild(el('rect', { x: p.l, y, width: bw, height: barH, rx: 3, fill: opts.color || '#2f6fad' }));
         const valueLabel = opts.percent ? pct(d[valueKey]) : num(d[valueKey]);
-        const inside = bw > xw - 58;
         svg.appendChild(el('text', {
-          x: inside ? p.l + bw - 6 : p.l + bw + 6,
+          x: p.l + bw + 8,
           y: y + barH - 3,
-          fill: inside ? '#ffffff' : '#334155',
+          fill: opts.valueColor || '#f8fafc',
           'font-size': 11,
-          'font-weight': inside ? 700 : 500,
-          'text-anchor': inside ? 'end' : 'start'
+          'font-weight': 760,
+          'text-anchor': 'start'
         }, valueLabel));
       });
     }
